@@ -1,60 +1,190 @@
+package dn;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 
-public interface Dominos {
-	
-	public static void main (String [] args) {
-		Path path = toPath("D:\\dominos.csv");
-		List<String> csv = importData(path);
-		
-		String [] dominoVal = new String [csv.size()];
-		String [] crown1 = new String [csv.size()];
-		String [] crown2 = new String [csv.size()];
-		String [] color1 = new String [csv.size()];
-		String [] color2 = new String [csv.size()];
-		
-		for (int i = 1; i<csv.size(); i++) {
-			String [] separate;
-			separate = csv.get(i).split(",");
-			crown1[i] = separate[0];
-			color1[i] = separate[1];
-			crown2[i] = separate[2];
-			color2[i] = separate[3];
-			dominoVal[i] = separate[4];
-			
-			}
-		for (int i = 0; i<dominoVal.length; i++) {
-			System.out.println("Nombre de couronnes sur la 1e case : " + crown1[i]);
-			System.out.println("Nombre de couronnes sur la 2e case : " + crown2[i]);
-			System.out.println("Terrain sur la 1e case : "+ color1[i]);
-			System.out.println("Terrain sur la 2e case : "+ color2[i]);
-			System.out.println("Numero du domino : "+ dominoVal[i]);
-			}
-		}
-		
-	
-	public static Path toPath(String FilePath) {
-		System.out.println("On vous renvoie le chemin de votre fichier");
-		Path Path = Paths.get(FilePath);
-		return Path;
-		}
-	
-	public static List<String> importData(Path File) {
-		List<String> lines = null;
+public class Domino {
+
+	public int crown1;
+	public int crown2;
+	public String type1;
+	public String type2;
+	public int value;
+
+	static List<Domino> initialPack = new ArrayList<Domino>(); 	//Paquet contenant tous les dominos possible
+	static List<Domino> gamePack = new ArrayList<Domino>(); 	//Paquet contenant seulement les dominos utilisés pour la partie
+
+	Path path = Paths.get("D:\\dominos.csv");
+
+	public Domino(int crown1, String type1, int crown2, String type2, int value) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public static void importFile(Path File){
+		/**************************************************************************
+		* On importe le fichier contenant les references des dominos (Fichier CSV)
+		* 
+		* 			Entrée : Chemin du fichier
+		* 				Sortie : /
+		*
+		***************************************************************************/
+
+		List<String> lines = null;  		//On crée une liste vide
 		try {
-		lines = Files.readAllLines(File);
+		lines = Files.readAllLines(File); 	//Chaque indice de la liste lines = les elements de chaque ligne correspondante
 		System.out.println("SUCCES");
-		} catch (IOException e) {
+		} catch (IOException e) { 
 			System.out.println("Impossible de lire le fichier");
 		} if (lines.size() < 2) {
 			System.out.println("Il n'y a pas de dominos dans le fichier");
-			return null;
 		}
 		else {
-			return lines;
+			fileProcessing(lines);			//On appelle la fonction qui separe les données
 		}
 	}
+
+	public static List<Domino> fileProcessing(List<String> lines){
+		/************************************************************************
+		* On separe les differentes données du fichier CSV pour en faire des    
+		*             parametres qui serviront a créer les dominos              
+		*                                                                       
+		*			Entrée : Liste de String                        
+		*			Sortie : Liste de Domino                        
+		*                                                                       
+		*************************************************************************/	
+		
+		for (int i = 0; i< lines.size(); i++){	//On parcourt la liste de String
+			String [] dominosParameters = lines.get(i).split(","); //Extraction des parametres (Nbe de couronnes, Type de terrain...)
+			Domino domino = newDomino(dominosParameters);
+			initialPack.add(domino);
+		}
+
+		return initialPack;
+	}
+
+	public static Domino newDomino(String [] parameters){
+		/*************************************************************************
+		* On crée un nouveau Domino a partir des parametres extraits du CSV
+		* 
+		* 		    Entrée : Tableau de parametres 
+		*                           Sortie : Domino 
+		*
+		*************************************************************************/
+		int crown1 = toInt(parameters[0]);	//Nb de couronnes partie gauche
+		String type1 = parameters[1];		//Type de terrain partie gauche   
+		int crown2 = toInt(parameters[2]);	//Nb de couronnes partie droite
+		String type2 = parameters[3];		//Type de terrain partie droite
+		int value = toInt(parameters[4]);	//Numero du domino
+
+		return new Domino(crown1,type1,crown2,type2,value);
+	}
+
+	public static int toInt(String s){
+		/*****************************
+		* Convertis un String en Int 
+		*
+		*       Entrée : String
+		*       Sortie : Integer
+		*
+		*****************************/
+		return Integer.parseInt(s);
+	}
+
+	public static void putDominos(int n){
+		/****************************************************************************
+		* Permet de placer le nombre de dominos necessaire au jeu dans le paquet de 
+		* jeu
+		* 
+		* 		   Entrée : Nbe de Dominos a placer
+		* 	      On place les dominos dans la liste gamePack
+		*
+		******************************************************************************/
+		int nbToPut = n;
+		int nbLeft = initialPack.size();
+		while(nbToPut>0){
+			int rand = (int) (Math.random() * (nbLeft - 1)); //On prend un nbe aleatoire parmis les dominos restants
+			gamePack.add(initialPack.get(rand));
+			initialPack.remove(rand);
+			nbToPut --;
+			nbLeft --;
+
+		}
+	}
+
+								// Pioche de cartes //
+
+	/*******************************************************************************
+	*     On veut savoir le numero de touts les dominos qui ont été piochées 
+	*         On veut egalement connaitre les dominos de chaque joueur 
+	*       Enfin on veut afficher a chaque joueur le domino qu'il a tiré
+	* Pioche <=> Supprimer un domino au hasard du paquet et le placer sur la table
+	*
+	*******************************************************************************/
+
+	
+
+	static List<Integer> dominosDrawed = new ArrayList<Integer>();
+
+	public static void drawDomino(){
+		/*******************************************
+		* On prend un domino au hasard de la pioche 
+		*      Puis on l'affiche sur la table
+		*
+		*******************************************/
+	}
+
+	
+	// Getter 
+	
+	
+	public int getCrown1() {
+		return crown1;
+	}
+
+	public void setCrown1(int crown1) {
+		this.crown1 = crown1;
+	}
+
+	public int getCrown2() {
+		return crown2;
+	}
+
+	public void setCrown2(int crown2) {
+		this.crown2 = crown2;
+	}
+
+	public String getType1() {
+		return type1;
+	}
+	
+	//Setter 
+	
+	
+/*
+	
+	public void setType1(String type1) {
+		this.type1 = type1;
+	}
+
+	public String getType2() {
+		return type2;
+	}
+
+	public void setType2(String type2) {
+		this.type2 = type2;
+	}
+
+	public int getValue() {
+		return value;
+	}
+
+	public void setValue(int value) {
+		this.value = value;
+	}
+*/
+
 }
