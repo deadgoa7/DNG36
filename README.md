@@ -1,3 +1,5 @@
-# DNG36
+# DNG36 Projet Domi'Nations en java pour l'ISEP 
 
-Projet Domi'Nations en java pour l'ISEP 
+How to play ? 
+
+
