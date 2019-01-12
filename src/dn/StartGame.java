@@ -1,17 +1,17 @@
 package dn;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class StartGame {
 	public static int nbJoueurs;
+	static ArrayList<String> joueurs = new ArrayList<String>();
 
 	public static void main(String[] args) {
-		Path path = Paths.get("D:\\dominos.csv");
-		Domino.importFile(path);
+		Domino.importFile("D:\\dominos.csv");
 		Start();
+		FirstTurn.firstTurn(joueurs, 1);
 		
 	}
 	
@@ -23,7 +23,7 @@ public class StartGame {
 			Scanner scan = new Scanner(System.in);
 			nbJoueurs = scan.nextInt();
 		} catch(InputMismatchException e) {
-			System.out.println("Vous n'avez pas rentré un nombre");
+			System.out.println("Vous n'avez pas rentrÃ© un nombre");
 		}
 		if (nbJoueurs == 2) {
 			System.out.println("Vous etes donc 2 joueurs");
@@ -40,6 +40,9 @@ public class StartGame {
 			player2.setColor("blanc");
 			playerSet(player2);
 			player2.setNbKing(2);
+			
+			joueurs.add(player1.getPseudo());
+			joueurs.add(player2.getPseudo());
 		}
 		else if (nbJoueurs == 3) {
 			System.out.println("Vous etes donc 3 joueurs");
@@ -61,6 +64,10 @@ public class StartGame {
 			player3.setColor("violet");
 			playerSet(player3);
 			player3.setNbKing(1);
+			
+			joueurs.add(player1.getPseudo());
+			joueurs.add(player2.getPseudo());
+			joueurs.add(player3.getPseudo());
 		}
 		else if (nbJoueurs == 4) {
 			System.out.println("Vous etes donc 4 joueurs");
@@ -88,6 +95,11 @@ public class StartGame {
 			playerSet(player4);
 			player4.setNbKing(1);
 			
+			joueurs.add(player1.getPseudo());
+			joueurs.add(player2.getPseudo());
+			joueurs.add(player3.getPseudo());
+			joueurs.add(player4.getPseudo());
+			
 		}
 		else {
 			System.out.println("Votre nombre n'est pas compris entre 2 et 4, veuillez reesayer");
@@ -103,7 +115,7 @@ public class StartGame {
 			Scanner scan = new Scanner(System.in);
 			pseudo = scan.nextLine();
 		}catch (InputMismatchException e) {
-			System.out.println("Vous n'avez pas rentré un pseudo");
+			System.out.println("Vous n'avez pas rentrÃ© un pseudo");
 		}
 		
 		player.setPseudo(pseudo);
