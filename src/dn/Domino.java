@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -121,6 +122,7 @@ public class Domino {
 
 	static List<Integer> nbDominosDrawed = new ArrayList<Integer>();
 	static List<Domino> dominosDrawed = new ArrayList<Domino>();
+	static List<Domino> sortedDominosDrawed = new ArrayList<Domino>();
 
 	public static void drawDomino(int nb){
 		/*******************************************
@@ -131,17 +133,44 @@ public class Domino {
 		System.out.println("Pioche");
 		for (int i = 0; i < nb; i++) {
 			Random r = new Random();
-			int random = r.nextInt(gamePack.size()) + 1; //Random prend une valeur entiere aléatoire entre 1 et max
+			int random = r.nextInt(gamePack.size()); //Random prend une valeur entiere aléatoire entre 1 et max
 			nbDominosDrawed.add(gamePack.get(random).value);
 			dominosDrawed.add(gamePack.get(random));
-			System.out.println(gamePack.get(random).getValue());
+			// System.out.println(gamePack.get(random).getValue());
 			gamePack.remove(random);
 		}
+		Collections.sort(nbDominosDrawed);
+		sortDominos();
 	}
 		
 	public static void afficheDomino() {
 		for (int i = 0; i < initialPack.size(); i++) {
 			System.out.println(initialPack.get(i).value);
+		}
+	}
+	
+	public static void sortDominos() {
+		int nb1 = nbDominosDrawed.size();
+		int nb2 = dominosDrawed.size();
+		System.out.println("Sorting...");
+		for (int j = 0; j < nb1; j++) {
+			for (int i = 0; i < nb2; i++) {
+				if(nbDominosDrawed.get(j) == dominosDrawed.get(i).value) {
+					sortedDominosDrawed.add(dominosDrawed.get(i));
+				}
+				else {
+				}
+			}
+		}
+		showSorted();
+	}
+	
+	public static void showSorted() {
+		for (int i = 0; i < sortedDominosDrawed.size(); i++) {
+			System.out.println("Valeur " + sortedDominosDrawed.get(i).value + " Type1 " + 
+		sortedDominosDrawed.get(i).type1 + " Couronne 1 " + sortedDominosDrawed.get(i).crown1 +
+		" Type2 " + sortedDominosDrawed.get(i).type2 + " Couronne 2 " + sortedDominosDrawed.get(i).crown2);
+			
 		}
 	}
 		
