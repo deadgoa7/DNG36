@@ -10,6 +10,7 @@ public class Player{
 	String color;
 	public List<Domino> hand = new ArrayList<Domino>();
 	public int nbKings;
+	int order;
 	
 	
 	public String getPseudo() {
@@ -37,6 +38,14 @@ public class Player{
 	
 	public int getNbKing() {
 		return nbKings;
+	}
+	
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	
+	public int getOrder() {
+		return order;
 	}
 
 
