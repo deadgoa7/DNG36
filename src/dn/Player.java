@@ -6,11 +6,18 @@ import java.util.List;
 public class Player{
 
 	String pseudo;
+	public List<Domino> hand = new ArrayList<Domino>();
 	int score;
 	String color;
-	public List<Domino> hand = new ArrayList<Domino>();
 	public int nbKings;
 	int order;
+	
+	public static void showHand(List<Domino> hand) {
+		int size = hand.size();
+		for (int i = 0;i<size; i++) {
+			Domino.showDomino(hand.get(i));
+		}
+	}
 	
 	
 	public String getPseudo() {
@@ -46,6 +53,10 @@ public class Player{
 	
 	public int getOrder() {
 		return order;
+	}
+	
+	public List<Domino> getHand(){
+		return hand;
 	}
 
 
