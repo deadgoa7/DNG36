@@ -25,6 +25,7 @@ public class GameLoop {
 		System.out.println("Mode 2 joueurs");
 		Domino.drawDomino(4);
 		chooseOneDomino(2);
+		System.out.println("\n" + "Chaque joueur selectionne encore un domino" + "\n");
 		chooseOneDomino(2);
 	}
 	
@@ -41,29 +42,60 @@ public class GameLoop {
 	}
 	
 	public static void chooseOneDomino(int n) {
-		if (n == 2) {
-			String j1 = FirstTurn.map.get(1); //Joueur en 1e position
-			String j2 = FirstTurn.map.get(2); //Joueur en 2e position
-			System.out.println(j1 + ",vous etes le premier a choisir");
-			System.out.println(j2 + ",a votre tour de choisir");
+		String j1;
+		String j2;
+		String j3;
+		String j4;
+		switch (n) {
+			case(2):
+				j1 = FirstTurn.map.get(1); //Joueur en 1e position
+				j2 = FirstTurn.map.get(2); //Joueur en 2e position
+				System.out.println(j1 + ",vous etes le premier a choisir");
+				chooseDomino(getPlayer(j1));
+				System.out.println(j2 + ",a votre tour de choisir");
+				chooseDomino(getPlayer(j2));
+				
+				break;
+			case(3):
+				j1 = FirstTurn.map.get(1); //Joueur en 1e position
+				j2 = FirstTurn.map.get(2); //Joueur en 2e position
+				j3 = FirstTurn.map.get(3); //Joueur en 3e position
+				System.out.println(j1 + ",vous etes le premier a choisir");
+				chooseDomino(getPlayer(j1));
+				System.out.println(j2 + ",a votre tour de choisir");
+				chooseDomino(getPlayer(j2));
+				System.out.println(j3 + ",a votre tour de choisir");
+				getPlayer(j3);
+				break;
+			case (4):
+				j1 = FirstTurn.map.get(1); //Joueur en 1e position
+				j2 = FirstTurn.map.get(2); //Joueur en 2e position
+				j3 = FirstTurn.map.get(3); //Joueur en 3e position
+				j4 = FirstTurn.map.get(4); //Joueur en 4e position
+				System.out.println(j1 + ",vous etes le premier a choisir");
+				chooseDomino(getPlayer(j1));
+				System.out.println(j2 + ",a votre tour de choisir");
+				chooseDomino(getPlayer(j2));
+				System.out.println(j3 + ",a votre tour de choisir");
+				chooseDomino(getPlayer(j3));
+				System.out.println(j4 + ",a votre tour de choisir");
+				chooseDomino(getPlayer(j4));
+				break;
 		}
-		else if(n == 3) {
-			String j1 = FirstTurn.map.get(1); //Joueur en 1e position
-			String j2 = FirstTurn.map.get(2); //Joueur en 2e position
-			String j3 = FirstTurn.map.get(3); //Joueur en 3e position
-			System.out.println(j1 + ",vous etes le premier a choisir");
-			System.out.println(j2 + ",a votre tour de choisir");
-			System.out.println(j3 + ",a votre tour de choisir");
-		}
-		else if(n == 4) {
-			String j1 = FirstTurn.map.get(1); //Joueur en 1e position
-			String j2 = FirstTurn.map.get(2); //Joueur en 2e position
-			String j3 = FirstTurn.map.get(3); //Joueur en 3e position
-			String j4 = FirstTurn.map.get(4); //Joueur en 4e position
-			System.out.println(j1 + ",vous etes le premier a choisir");
-			System.out.println(j2 + ",a votre tour de choisir");
-			System.out.println(j3 + ",a votre tour de choisir");
-			System.out.println(j4 + ",a votre tour de choisir");
-		}
+	}
+	
+	public static void chooseDomino(Player player) {
+		
+	}
+	
+	public static Player getPlayer(String pseudo) {
+		Player player = new Player();
+		int n = StartGame.players.size();
+		for (int i = 0; i < n; i++) {
+			if(StartGame.players.get(i).pseudo == pseudo) {
+				player = StartGame.players.get(i);
+			} else {
+			}
+		} return player;
 	}
 }
