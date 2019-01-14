@@ -42,6 +42,7 @@ public class Domino {
 			}
 		} catch (IOException e) {
 			System.out.println("ERROR");
+			System.out.println(e);
 		}
 		return initialPack;	
 	}
@@ -130,6 +131,11 @@ public class Domino {
 		*      Puis on l'affiche sur la table
 		*
 		*******************************************/
+		int size = dominosDrawed.size();
+		for (int j = 0; j < size -1; j++) {
+			dominosDrawed.remove(j);
+			nbDominosDrawed.remove(j);
+		}
 		System.out.println("Pioche");
 		for (int i = 0; i < nb; i++) {
 			Random r = new Random();
@@ -150,6 +156,10 @@ public class Domino {
 	}
 	
 	public static void sortDominos() {
+		int size = sortedDominosDrawed.size();
+		for (int i = 0; i < size -1; i++) {
+			sortedDominosDrawed.remove(i);
+		}
 		int nb1 = nbDominosDrawed.size();
 		int nb2 = dominosDrawed.size();
 		System.out.println("Sorting...");
@@ -172,6 +182,11 @@ public class Domino {
 		" Type2 " + sortedDominosDrawed.get(i).type2 + " Couronne 2 " + sortedDominosDrawed.get(i).crown2);
 			
 		}
+	}
+	
+	public static void showDomino(Domino domino) {
+		System.out.println("Valeur " + domino.value + " Type1 " + domino.type1 + " Couronne 1 " + domino.crown1 +
+		" Type2 " + domino.type2 + " Couronne 2 " + domino.crown2);
 	}
 		
 		
@@ -203,6 +218,8 @@ public class Domino {
 	public int getValue() {
 		return value;
 	}
+	
+	
 	
 	//Setter 
 	
