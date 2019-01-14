@@ -7,6 +7,7 @@ import java.util.Scanner;
 public class StartGame {
 	public static int nbJoueurs;
 	static ArrayList<String> joueurs = new ArrayList<String>();
+	public static ArrayList<Player> players = new ArrayList<Player>();
 
 	public static void main(String[] args) {
 		Domino.importFile("D:\\dominos.csv");
@@ -35,14 +36,16 @@ public class StartGame {
 			player1.setColor("noir");
 			playerSet(player1);
 			player1.setNbKing(2);
+			joueurs.add(player1.getPseudo());
+			players.add(player1);
 			
 			Player player2 = new Player();
 			player2.setColor("blanc");
 			playerSet(player2);
 			player2.setNbKing(2);
-			
-			joueurs.add(player1.getPseudo());
 			joueurs.add(player2.getPseudo());
+			players.add(player2);
+				
 		}
 		else if (nbJoueurs == 3) {
 			System.out.println("Vous etes donc 3 joueurs");
@@ -54,20 +57,23 @@ public class StartGame {
 			player1.setColor("noir");
 			playerSet(player1);
 			player1.setNbKing(1);
+			joueurs.add(player1.getPseudo());
+			players.add(player1);
 			
 			Player player2 = new Player();
 			player2.setColor("blanc");
 			playerSet(player2);
 			player2.setNbKing(1);
+			joueurs.add(player2.getPseudo());
+			players.add(player2);
 			
 			Player player3 = new Player();
 			player3.setColor("violet");
 			playerSet(player3);
 			player3.setNbKing(1);
-			
-			joueurs.add(player1.getPseudo());
-			joueurs.add(player2.getPseudo());
 			joueurs.add(player3.getPseudo());
+			players.add(player3);	
+			
 		}
 		else if (nbJoueurs == 4) {
 			System.out.println("Vous etes donc 4 joueurs");
@@ -79,26 +85,29 @@ public class StartGame {
 			player1.setColor("noir");
 			playerSet(player1);
 			player1.setNbKing(1);
+			joueurs.add(player1.getPseudo());
+			players.add(player1);
 			
 			Player player2 = new Player();
 			player2.setColor("blanc");
 			playerSet(player2);
 			player2.setNbKing(1);
+			joueurs.add(player2.getPseudo());
+			players.add(player2);
 			
 			Player player3 = new Player();
 			player3.setColor("violet");
 			playerSet(player3);
 			player3.setNbKing(1);
+			joueurs.add(player3.getPseudo());
+			players.add(player3);
 			
 			Player player4 = new Player();
 			player4.setColor("orange");
 			playerSet(player4);
 			player4.setNbKing(1);
-			
-			joueurs.add(player1.getPseudo());
-			joueurs.add(player2.getPseudo());
-			joueurs.add(player3.getPseudo());
 			joueurs.add(player4.getPseudo());
+			players.add(player4);
 			
 		}
 		else {
@@ -117,11 +126,14 @@ public class StartGame {
 		}catch (InputMismatchException e) {
 			System.out.println("Vous n'avez pas rentré un pseudo");
 		}
-		
-		player.setPseudo(pseudo);
-		
-		System.out.println(player.getPseudo() + ", votre couleur sera le " + player.getColor() + ".");
-		
+		if (joueurs.contains(pseudo)) {
+			System.out.println("Le nom du joueur existe deja, veuillez reesayer !");
+			playerSet(player);
+		}
+		else {
+			player.setPseudo(pseudo);
+			System.out.println(player.getPseudo() + ", votre couleur sera le " + player.getColor() + ".");
+		}
 	}
 
 }
