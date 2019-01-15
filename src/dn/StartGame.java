@@ -10,9 +10,12 @@ public class StartGame {
 	public static ArrayList<Player> players = new ArrayList<Player>();
 
 	public static void main(String[] args) {
+		
 		Domino.importFile("D:\\dominos.csv");
+		//SemiDomino.createSemiDomino("L", 7);
 		Start();
 		FirstTurn.firstTurn(joueurs, 1);
+		
 		
 	}
 	
