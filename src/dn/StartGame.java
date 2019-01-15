@@ -13,13 +13,13 @@ public class StartGame {
 		
 		Domino.importFile("D:\\dominos.csv");
 		//SemiDomino.createSemiDomino("L", 7);
-		Start();
+		start();
 		FirstTurn.firstTurn(joueurs, 1);
 		
 		
 	}
 	
-	public static void Start() {
+	public static void start() {
 		System.out.println("###### Bienvenue sur le jeu Domi'Nations ######");
 		System.out.println("Combien de joueurs etes vous ? (2-4)");
 		try {
@@ -115,7 +115,7 @@ public class StartGame {
 		}
 		else {
 			System.out.println("Votre nombre n'est pas compris entre 2 et 4, veuillez reesayer");
-			Start();
+			start();
 		}	
 	}
 	
