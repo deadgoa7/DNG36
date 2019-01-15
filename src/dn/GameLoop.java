@@ -39,10 +39,6 @@ public class GameLoop {
 	public static void twoPlayers() {
 		System.out.println("Mode 2 joueurs");
 		Domino.drawDomino(4);
-		
-		chooseOneDomino(2);
-		System.out.println("\n" + "Chaque joueur selectionne encore un domino parmi ceux ci :" + "\n");
-		Domino.showSorted();
 		chooseOneDomino(2);
 		
 		System.out.println("Main de " + j1 + " :");
@@ -52,6 +48,16 @@ public class GameLoop {
 		System.out.println("Main de " + j2 + " :");
 		List<Domino> hand2 = getPlayer(j2).hand;
 		getPlayer(j1).showHand(hand2);
+		
+		Domino dominoj1 = getPlayer(j1).hand.get(0);
+		Domino dominoj2 = getPlayer(j2).hand.get(0);
+		
+		if (getPlayer(j1).hand.size() < 2) {
+			System.out.println("Pas de placement au premier tour");
+		}
+		else {
+		System.out.println("On place les dominos");
+		}
 		
 	}
 	
@@ -71,6 +77,17 @@ public class GameLoop {
 		System.out.println("Main de " + j3 + " :");
 		List<Domino> hand3 = getPlayer(j3).hand;
 		getPlayer(j1).showHand(hand3);
+		
+		Domino dominoj1 = getPlayer(j1).hand.get(0);
+		Domino dominoj2 = getPlayer(j2).hand.get(0);
+		Domino dominoj3 = getPlayer(j3).hand.get(0);
+		
+		if (getPlayer(j1).hand.size() < 2) {
+			System.out.println("Pas de placement au premier tour");
+		}
+		else {
+		System.out.println("On place les dominos");
+		}
 	}
 	
 	public static void fourPlayers() {
@@ -94,9 +111,22 @@ public class GameLoop {
 		System.out.println("Main de " + j4 + " :");
 		List<Domino> hand4 = getPlayer(j4).hand;
 		getPlayer(j1).showHand(hand4);
+		
+		Domino dominoj1 = getPlayer(j1).hand.get(0);
+		Domino dominoj2 = getPlayer(j2).hand.get(0);
+		Domino dominoj3 = getPlayer(j3).hand.get(0);
+		Domino dominoj4 = getPlayer(j4).hand.get(0);
+		
+		if (getPlayer(j1).hand.size() < 2) {
+			System.out.println("Pas de placement au premier tour");
+		}
+		else {
+		System.out.println("On place les dominos");
+		}
 	}
 	
 	public static void chooseOneDomino(int n) {
+		
 		/*
 		 * On utilise la HashMap du tour precedent pour avoir l'ordre de jeu
 		 * Puis chaque joueur choisit un domino selon cet ordre 
@@ -109,11 +139,25 @@ public class GameLoop {
 				j2 = FirstTurn.map.get(2); //Joueur en 2e position
 				FirstTurn.map.remove(1);
 				FirstTurn.map.remove(2);
+				
 				System.out.println(j1 + ",vous etes le premier a choisir");
 				getPlayer(j1).hand.add(chooseDomino(j1));
+				
 				Domino.showSorted();
+				
 				System.out.println(j2 + ",a votre tour de choisir");
 				getPlayer(j2).hand.add(chooseDomino(j2));
+				
+				Domino.showSorted();
+				
+				System.out.println(j1 + ", encore a vous !");
+				getPlayer(j1).hand.add(chooseDomino(j1));
+				
+				Domino.showSorted();
+				
+				System.out.println(j2 + ", encore a vous !");
+				getPlayer(j2).hand.add(chooseDomino(j2));
+				
 				
 				break;
 			case(3):
@@ -123,15 +167,22 @@ public class GameLoop {
 				FirstTurn.map.remove(1);
 				FirstTurn.map.remove(2);
 				FirstTurn.map.remove(3);
+				
 				System.out.println(j1 + ",vous etes le premier a choisir");
 				getPlayer(j1).hand.add(chooseDomino(j1));
+				
 				Domino.showSorted();
+				
 				System.out.println(j2 + ",a votre tour de choisir");
 				getPlayer(j2).hand.add(chooseDomino(j2));
+				
 				Domino.showSorted();
+				
 				System.out.println(j3 + ",a votre tour de choisir");
 				getPlayer(j3).hand.add(chooseDomino(j3));
+				
 				Domino.showSorted();
+				
 				break;
 			case (4):
 				j1 = FirstTurn.map.get(1); //Joueur en 1e position
@@ -142,18 +193,27 @@ public class GameLoop {
 				FirstTurn.map.remove(2);
 				FirstTurn.map.remove(3);
 				FirstTurn.map.remove(4);
+				
 				System.out.println(j1 + ",vous etes le premier a choisir");
 				getPlayer(j1).hand.add(chooseDomino(j1));
+				
 				Domino.showSorted();
+				
 				System.out.println(j2 + ",a votre tour de choisir");
 				getPlayer(j2).hand.add(chooseDomino(j2));
+				
 				Domino.showSorted();
+				
 				System.out.println(j3 + ",a votre tour de choisir");
 				getPlayer(j3).hand.add(chooseDomino(j3));
+				
 				Domino.showSorted();
+				
 				System.out.println(j4 + ",a votre tour de choisir");
 				getPlayer(j4).hand.add(chooseDomino(j4));
+				
 				Domino.showSorted();
+				
 				break;
 		}
 	}
