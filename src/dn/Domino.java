@@ -124,6 +124,7 @@ public class Domino {
 	static List<Integer> nbDominosDrawed = new ArrayList<Integer>();
 	static List<Domino> dominosDrawed = new ArrayList<Domino>();
 	static List<Domino> sortedDominosDrawed = new ArrayList<Domino>();
+	static List<Domino> instanceOfDominosDrawed = new ArrayList<Domino>();
 
 	public static void drawDomino(int nb){
 		/*******************************************
@@ -131,11 +132,7 @@ public class Domino {
 		*      Puis on l'affiche sur la table
 		*
 		*******************************************/
-		int size = dominosDrawed.size();
-		for (int j = 0; j < size -1; j++) {
-			dominosDrawed.remove(j);
-			nbDominosDrawed.remove(j);
-		}
+		dominosDrawed.removeAll(dominosDrawed);
 		System.out.println("Pioche");
 		for (int i = 0; i < nb; i++) {
 			Random r = new Random();
@@ -156,15 +153,18 @@ public class Domino {
 	}
 	
 	public static void sortDominos() {
-		int size = sortedDominosDrawed.size();
+		/*
+		 * Trie les dominos par ordre croissant et les place dans sortedDominosDrawed
+		 */
+		int size = sortedDominosDrawed.size(); //On vide le paquet de dominos triés
 		for (int i = 0; i < size -1; i++) {
 			sortedDominosDrawed.remove(i);
 		}
-		int nb1 = nbDominosDrawed.size();
+		int nb1 = nbDominosDrawed.size(); 
 		int nb2 = dominosDrawed.size();
 		System.out.println("Sorting...");
-		for (int j = 0; j < nb1; j++) {
-			for (int i = 0; i < nb2; i++) {
+		for (int j = 0; j < nb1; j++) {  	//Double boucle permettant d'associer les dominos
+			for (int i = 0; i < nb2; i++) { //avec leur valeur dans l'ordre donné par Collections.sort
 				if(nbDominosDrawed.get(j) == dominosDrawed.get(i).value) {
 					sortedDominosDrawed.add(dominosDrawed.get(i));
 				}
@@ -172,10 +172,15 @@ public class Domino {
 				}
 			}
 		}
+		instanceOfDominosDrawed.removeAll(instanceOfDominosDrawed);
+		instanceOfDominosDrawed = cloneList(sortedDominosDrawed);
 		showSorted();
 	}
 	
 	public static void showSorted() {
+		/*
+		 * Permet de donnes les caracteristiques de tous les dominos piochés triés dans l'ordre 
+		 */
 		for (int i = 0; i < sortedDominosDrawed.size(); i++) {
 			System.out.println("Valeur " + sortedDominosDrawed.get(i).value + " Type1 " + 
 		sortedDominosDrawed.get(i).type1 + " Couronne 1 " + sortedDominosDrawed.get(i).crown1 +
@@ -187,6 +192,12 @@ public class Domino {
 	public static void showDomino(Domino domino) {
 		System.out.println("Valeur " + domino.value + " Type1 " + domino.type1 + " Couronne 1 " + domino.crown1 +
 		" Type2 " + domino.type2 + " Couronne 2 " + domino.crown2);
+	}
+	
+	public static List<Domino> cloneList(List<Domino> list) {
+	    List<Domino> clone = new ArrayList<>(list.size());
+	    for (Domino item : list) clone.add(item);
+	    return clone;
 	}
 		
 		
