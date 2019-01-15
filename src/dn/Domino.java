@@ -163,8 +163,8 @@ public class Domino {
 		int nb1 = nbDominosDrawed.size(); 
 		int nb2 = dominosDrawed.size();
 		System.out.println("Sorting...");
-		for (int j = 0; j < nb1; j++) {  	//Double boucle permettant d'associer les dominos
-			for (int i = 0; i < nb2; i++) { //avec leur valeur dans l'ordre donné par Collections.sort
+		for (int j = 0; j < nb1; j++) {  	//Double boucle permettant d'associer les dominos avec
+			for (int i = 0; i < nb2; i++) { //leur valeur dans l'ordre donné par Collections.sort
 				if(nbDominosDrawed.get(j) == dominosDrawed.get(i).value) {
 					sortedDominosDrawed.add(dominosDrawed.get(i));
 				}
@@ -176,6 +176,12 @@ public class Domino {
 		instanceOfDominosDrawed = cloneList(sortedDominosDrawed);
 		showSorted();
 	}
+	
+	public static List<Domino> cloneList(List<Domino> list) {
+	    List<Domino> clone = new ArrayList<>(list.size());
+	    for (Domino item : list) clone.add(item);
+	    return clone;
+}
 	
 	public static void showSorted() {
 		/*
@@ -193,15 +199,6 @@ public class Domino {
 		System.out.println("Valeur " + domino.value + " Type1 " + domino.type1 + " Couronne 1 " + domino.crown1 +
 		" Type2 " + domino.type2 + " Couronne 2 " + domino.crown2);
 	}
-	
-	public static List<Domino> cloneList(List<Domino> list) {
-	    List<Domino> clone = new ArrayList<>(list.size());
-	    for (Domino item : list) clone.add(item);
-	    return clone;
-	}
-		
-		
-
 	
 	// Getter 
 	
