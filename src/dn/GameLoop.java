@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameLoop {
+	
 	static String j1;
 	static String j2;
 	static String j3;
@@ -17,23 +18,28 @@ public class GameLoop {
 	 * 
 	 *******************************************************/
 	public static void gameMode(int i) {
-		if (i == 2) {
-			twoPlayers();	
-		}
-		else if (i == 3) {
-			threePlayers();	
-		}
-		else if (i == 4) {
-			fourPlayers();	
-		}
-		else {
-			System.out.println("ERREUR");
+		while(!Domino.gamePack.isEmpty()) {
+			if (i == 2) {
+				twoPlayers();	
+			}
+			else if (i == 3) {
+				threePlayers();	
+			}
+			else if (i == 4) {
+				fourPlayers();	
+			}
+			else {
+				System.out.println("ERREUR");
+			}
+			
+			System.out.println("Le paquet est vide");
 		}
 	}
 	
 	public static void twoPlayers() {
 		System.out.println("Mode 2 joueurs");
 		Domino.drawDomino(4);
+		
 		chooseOneDomino(2);
 		System.out.println("\n" + "Chaque joueur selectionne encore un domino parmi ceux ci :" + "\n");
 		Domino.showSorted();
@@ -91,30 +97,40 @@ public class GameLoop {
 	}
 	
 	public static void chooseOneDomino(int n) {
+		/*
+		 * On utilise la HashMap du tour precedent pour avoir l'ordre de jeu
+		 * Puis chaque joueur choisit un domino selon cet ordre 
+		 * Pour cela on ajoute le domino a sa main
+		 */
 		
 		switch (n) {
 			case(2):
 				j1 = FirstTurn.map.get(1); //Joueur en 1e position
 				j2 = FirstTurn.map.get(2); //Joueur en 2e position
+				FirstTurn.map.remove(1);
+				FirstTurn.map.remove(2);
 				System.out.println(j1 + ",vous etes le premier a choisir");
-				getPlayer(j1).hand.add(chooseDomino());
+				getPlayer(j1).hand.add(chooseDomino(j1));
 				Domino.showSorted();
 				System.out.println(j2 + ",a votre tour de choisir");
-				getPlayer(j2).hand.add(chooseDomino());
+				getPlayer(j2).hand.add(chooseDomino(j2));
 				
 				break;
 			case(3):
 				j1 = FirstTurn.map.get(1); //Joueur en 1e position
 				j2 = FirstTurn.map.get(2); //Joueur en 2e position
 				j3 = FirstTurn.map.get(3); //Joueur en 3e position
+				FirstTurn.map.remove(1);
+				FirstTurn.map.remove(2);
+				FirstTurn.map.remove(3);
 				System.out.println(j1 + ",vous etes le premier a choisir");
-				getPlayer(j1).hand.add(chooseDomino());
+				getPlayer(j1).hand.add(chooseDomino(j1));
 				Domino.showSorted();
 				System.out.println(j2 + ",a votre tour de choisir");
-				getPlayer(j2).hand.add(chooseDomino());
+				getPlayer(j2).hand.add(chooseDomino(j2));
 				Domino.showSorted();
 				System.out.println(j3 + ",a votre tour de choisir");
-				getPlayer(j3).hand.add(chooseDomino());
+				getPlayer(j3).hand.add(chooseDomino(j3));
 				Domino.showSorted();
 				break;
 			case (4):
@@ -122,41 +138,54 @@ public class GameLoop {
 				j2 = FirstTurn.map.get(2); //Joueur en 2e position
 				j3 = FirstTurn.map.get(3); //Joueur en 3e position
 				j4 = FirstTurn.map.get(4); //Joueur en 4e position
+				FirstTurn.map.remove(1);
+				FirstTurn.map.remove(2);
+				FirstTurn.map.remove(3);
+				FirstTurn.map.remove(4);
 				System.out.println(j1 + ",vous etes le premier a choisir");
-				getPlayer(j1).hand.add(chooseDomino());
+				getPlayer(j1).hand.add(chooseDomino(j1));
 				Domino.showSorted();
 				System.out.println(j2 + ",a votre tour de choisir");
-				getPlayer(j2).hand.add(chooseDomino());
+				getPlayer(j2).hand.add(chooseDomino(j2));
 				Domino.showSorted();
 				System.out.println(j3 + ",a votre tour de choisir");
-				getPlayer(j3).hand.add(chooseDomino());
+				getPlayer(j3).hand.add(chooseDomino(j3));
 				Domino.showSorted();
 				System.out.println(j4 + ",a votre tour de choisir");
-				getPlayer(j4).hand.add(chooseDomino());
+				getPlayer(j4).hand.add(chooseDomino(j4));
 				Domino.showSorted();
 				break;
 		}
 	}
 	
-	public static Domino chooseDomino() {
+	public static Domino chooseDomino(String player) {
+		/*
+		 * Cette methode permet de demander au joueur le domino qu'il shohaite prendre
+		 * Elle renvoie ainsi le domino qui sera supprimé du paquet de dominos piochés 
+		 * dans le but de l'ajouter a la main du joueur 
+		 */
 		System.out.println("Quel domino choisissez vous (1-" + Domino.sortedDominosDrawed.size() + ")" );
 		Domino domino = new Domino();
 		try {
 			Scanner scan = new Scanner(System.in);
 			int choix = scan.nextInt();
 			domino = Domino.sortedDominosDrawed.get(choix-1);
+			FirstTurn.map.put(getIndexOfDomino(domino), player);
 			Domino.sortedDominosDrawed.remove(choix-1);
 		} catch (InputMismatchException e) {
 			System.out.println("Type d'entrée incorrect, veuillez reesayer");
 		} catch (IndexOutOfBoundsException e) {
 			System.out.println("Le nombre que vous avez entré est incorrect, veuillez reesayer ");
-			chooseDomino();
+			chooseDomino(player);
 		}
 		return domino;
 		
 	}
 	
 	public static Player getPlayer(String pseudo) {
+		/*
+		 * Permet de renvoyer le joueur a partir de son pseudo
+		 */
 		Player player = new Player();
 		int n = StartGame.players.size();
 		for (int i = 0; i < n; i++) {
@@ -165,5 +194,19 @@ public class GameLoop {
 			} else {
 			}
 		} return player;
+	}
+	
+	public static int getIndexOfDomino(Domino domino) {
+		int index = 0;
+		int sizeInstance = Domino.instanceOfDominosDrawed.size();
+		System.out.println(sizeInstance);
+		for (int j = 0; j < sizeInstance; j++) {
+			if(Domino.instanceOfDominosDrawed.get(j).value == domino.value) {
+				index = j;
+			}
+		}
+		index ++;
+		System.out.println("Index = " + index);
+		return index;
 	}
 }
