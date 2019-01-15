@@ -24,6 +24,12 @@ public class FirstTurn extends StartGame {
 		GameLoop.gameMode(nbPlayers);
 	}
 	public static void drawKings(ArrayList<String> players, int i) {
+		/*
+		 * On tire les joueurs de façon aleatoire pour avoir l'ordre de jeu 
+		 * du premier tour
+		 * 
+		 * Entrée : Liste des pseudos des joueurs 
+		 */
 		if(players.size() < 2 || players.size() > 4) {
 			System.out.println("Nbe de joueurs invalide !");
 		}
