@@ -10,7 +10,6 @@ public class Player{
 	int score;
 	String color;
 	public int nbKings;
-	int order;
 	
 	public static void showHand(List<Domino> hand) {
 		int size = hand.size();
@@ -45,14 +44,6 @@ public class Player{
 	
 	public int getNbKing() {
 		return nbKings;
-	}
-	
-	public void setOrder(int order) {
-		this.order = order;
-	}
-	
-	public int getOrder() {
-		return order;
 	}
 	
 	public List<Domino> getHand(){
